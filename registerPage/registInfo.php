@@ -63,6 +63,7 @@
 			width: 100px;
 			height: 100px;
 			background-size: contain;
+			background-repeat: no-repeat;
 		}
 		button {
 			width: 100px;
@@ -115,6 +116,11 @@
 	else
 		echo "<script>alert('아이디를 입력해주세요'); location.href='".$link."';</script>";
 	#비밀번호
+	if ($myPass)
+		echo "<script>document.getElementById('Password').innerHTML = '".$myPass."';</script>";
+	else
+		echo "<script>alert('비밀번호를 입력해주세요'); location.href='".$link."';</script>";
+	#비밀번호 일치 판정
 	if ($myPass != $checkPass)
 		echo "<script>alert('비밀번호 불일치!'); location.href='".$link."';</script>";
 	else
@@ -137,7 +143,7 @@
 		echo "<script>document.getElementById('Nick').innerHTML = '-';</script>";
 	#생년월일
 	if ($myYear && $myMonth && $myDay)
-		echo "<script>document.getElementById('Birth').innerHTML = '".$myYear."년 ".$myMonth."월 ".$myDay."일".";</script>";
+		echo "<script>document.getElementById('Birth').innerHTML = '".$myYear."년 ".$myMonth."월 ".$myDay."일';</script>";
 	else
 		echo "<script>alert('생년월일을 입력해주세요'); location.href='".$link."';</script>";
 	#이메일
@@ -160,13 +166,13 @@
 	else
 		echo "<script>document.getElementById('Intro').innerHTML = '-';</script>";
 	#프로필 사진
-	$path = "./Upload/";
-	if (move_uploaded_file($myProfile['tmp_name'], $path.$myProfile['name']))
-		echo "<script>document.getElementById('File').style.backgroundImage = 'url('./Upload/".$myProfile['name']."')';</script>";
+	$path = "./Upload/".$myProfile['name'];	
+	if (move_uploaded_file($myProfile['tmp_name'], $path))
+		echo "<script>document.getElementById('File').style.backgroundImage = \"url('".$path."')\";</script>";
 	else 
 		echo "<script>document.getElementById('File').innerHTML = '-';</script>";
 	#본인확인질문
-	if (isset($authQuest)?True:False)
+	if ($authQuest)
 		echo "<script>document.getElementById('Ask').innerHTML = '".$authQuest."';</script>";
 	else
 		echo "<script>alert('본인확인질문을 선택해주세요 $authQuest'); location.href='".$link."';</script>";
